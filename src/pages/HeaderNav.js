@@ -8,8 +8,8 @@ const HeaderNav = () => {
             <nav className="bg-white border-gray-200 dark:bg-gray-900">
                 <div className="flex flex-wrap items-center justify-between max-w-screen-xl p-4 mx-auto">
                     <a target="_blank" href="http://colegiocomercialcpv.com.br/"
-                        className="flex items-center space-x-3 rtl:space-x-reverse">
-                        <img src={Logo} className="h-12" />
+                        className="flex items-center space-x-3 rtl:space-x-reverse" rel="noreferrer">
+                        <img src={Logo} alt="Logo" className="w-auto h-8" />
                     </a>
                     <div className="flex items-center space-x-3 md:order-2 md:space-x-0 rtl:space-x-reverse">
                         <button type="button"
@@ -17,7 +17,7 @@ const HeaderNav = () => {
                             id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown"
                             data-dropdown-placement="bottom">
                             <span className="sr-only">Open user menu</span>
-                            <img src={PersonIcon} alt="Logo" classNameName="h-8 w-8 rounded-full bg-white border-none outline-none" />
+                            <img src={PersonIcon} alt="Logo" className="w-8 h-8 bg-white border-none rounded-full outline-none" />
                         </button>
                         <div
                             className="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600"
@@ -38,7 +38,7 @@ const HeaderNav = () => {
                             aria-controls="navbar-user" aria-expanded="false">
                             <span className="sr-only">Open main menu</span>
                             <svg className="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
                                     d="M1 1h15M1 7h15M1 13h15" />
                             </svg>
                         </button>

@@ -5,7 +5,7 @@ const Projetos = () => {
     return (
         <div className="container px-4 py-8 mx-auto bg-white">
             
-            <h1 className="text-3xl font-extrabold text-black dark:text-white">Projetos</h1>
+            <h1 className="text-3xl font-bold text-black dark:text-white">Projetos</h1>
             <div className="flex flex-col gap-8 md:flex-row">
                 
                 <aside className="w-full pt-8 md:w-3/4">
