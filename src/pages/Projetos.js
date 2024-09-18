@@ -1,15 +1,23 @@
-import React from 'react'
-import AddIcon from '../assets/img/addicon.svg'
+// Projetos.js
+import React, { useState } from 'react';
+import Modal from '../components/modal';
+import AddIcon from '../assets/img/addicon.svg';
 
 const Projetos = () => {
+    const [isOpen, setIsOpen] = useState(false);
+
+    const toggleModal = () => {
+        setIsOpen(!isOpen);
+    };
+
     return (
         <div className="container px-4 py-8 mx-auto bg-white">
-            
+
             <h1 className="text-3xl font-bold text-black dark:text-white">Projetos</h1>
             <div className="flex flex-col gap-8 md:flex-row">
                 
                 <aside className="w-full pt-8 md:w-3/4">
-                    {/* Inicio: Botão Pesquisar */}
+                    {/* BOTAO DE PESQUISAR */}
                     <form className="flex items-center mx-auto">
                         <label for="default-search" className="sr-only">Search</label>
                         <div className="relative w-full">
@@ -28,53 +36,72 @@ const Projetos = () => {
                     </form>
                     <div className="pt-4">
                         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-                            <div
-                                className="flex items-center justify-between w-full p-4 bg-gray-100 border border-gray-200 rounded-lg shadow-md">
+                            {/* Exemplo de card */}
+                            <div className="flex items-center justify-between w-full p-4 bg-gray-100 border border-gray-200 rounded-lg shadow-md">
                                 <div>
                                     <h2 className="text-lg font-medium text-gray-800">Jogos</h2>
                                     <div className="space-x-4 text-sm text-gray-500">
-                                        <span>Quimica</span>
+                                        <span>Química</span>
                                         <span>2B</span>
                                     </div>
                                 </div>
                                 <button
+                                    onClick={toggleModal}
                                     className="relative flex items-center justify-center w-10 h-10 text-2xl font-bold text-gray-800 transition-all duration-300 ease-in-out rounded-full hover:bg-gray-200 hover:ring-2 hover:ring-gray-400 hover:shadow-lg">
                                     <img src={AddIcon} alt="+" />
                                 </button>
                             </div>
-                            <div
-                                className="flex items-center justify-between w-full p-4 bg-gray-100 border border-gray-200 rounded-lg shadow-md">
+
+                            <div className="flex items-center justify-between w-full p-4 bg-gray-100 border border-gray-200 rounded-lg shadow-md">
                                 <div>
-                                    <h2 className="text-lg font-medium text-gray-800">Jogos</h2>
+                                <h2 className="text-lg font-medium text-gray-800">Jogos</h2>
                                     <div className="space-x-4 text-sm text-gray-500">
                                         <span>Matemática</span>
                                         <span>2B</span>
                                     </div>
                                 </div>
                                 <button
+                                    onClick={toggleModal}
                                     className="relative flex items-center justify-center w-10 h-10 text-2xl font-bold text-gray-800 transition-all duration-300 ease-in-out rounded-full hover:bg-gray-200 hover:ring-2 hover:ring-gray-400 hover:shadow-lg">
                                     <img src={AddIcon} alt="+" />
                                 </button>
                             </div>
-                            <div
-                                className="flex items-center justify-between w-full p-4 bg-gray-100 border-2 border-gray-200 border-dashed rounded-lg shadow-md hover:shadow-lg">
+
+                            <div className="flex items-center justify-between w-full p-4 bg-gray-100 border border-gray-200 rounded-lg shadow-md">
                                 <div>
-                                    <h2 className="text-lg font-medium text-gray-800">Adicionar Novo Projeto</h2>
+                                <h2 className="text-lg font-medium text-gray-800">Jogos</h2>
+                                    <div className="space-x-4 text-sm text-gray-500">
+                                        <span>Matemática</span>
+                                        <span>2B</span>
+                                    </div>
+                                </div>
+                                <button
+                                    onClick={toggleModal}
+                                    className="relative flex items-center justify-center w-10 h-10 text-2xl font-bold text-gray-800 transition-all duration-300 ease-in-out rounded-full hover:bg-gray-200 hover:ring-2 hover:ring-gray-400 hover:shadow-lg">
+                                    <img src={AddIcon} alt="+" />
+                                </button>
+                            </div>
+                            
+                            <div className="flex items-center justify-between w-full p-4 bg-gray-100 border-2 border-gray-200 border-dashed rounded-lg shadow-md hover:shadow-lg">
+                                <div>
+                                <h2 className="text-lg font-medium text-gray-800">Adicionar Novo Projeto</h2>
                                     <div className="space-x-4 text-sm text-gray-500">
                                         <span>Disciplinas</span>
                                         <span>Salas</span>
                                     </div>
                                 </div>
                                 <button
+                                    onClick={toggleModal}
                                     className="relative flex items-center justify-center w-10 h-10 text-2xl font-bold text-gray-800 transition-all duration-300 ease-in-out rounded-full hover:bg-gray-200 hover:ring-2 hover:ring-gray-400 hover:shadow-lg">
                                     <img src={AddIcon} alt="+" />
                                 </button>
                             </div>
-
+                            {/* Adicione mais cards conforme necessário */}
                         </div>
                     </div>
                 </aside>
 
+                {/* Componente de filtro, se necessário */}
                 <aside className="w-full pt-8 md:w-1/4">
                     <span>Ordenar por: <select className="ml-2" name="" id="">
                         <option value="a-pra-z">A-Z</option>
@@ -166,13 +193,14 @@ const Projetos = () => {
                                 className="w-4 h-4 text-green-600 bg-gray-100 border-gray-300 rounded focus:ring-green-500 focus:ring-2" />
                             <label for="..." className="ml-2 text-sm font-medium text-gray-900">3B</label>
                         </li>
-
                     </ul>
-
                 </aside>
             </div>
-        </div>
-    )
-}
 
-export default Projetos
+            {/* Modal */}
+            <Modal isOpen={isOpen} toggleModal={toggleModal} />
+        </div>
+    );
+};
+
+export default Projetos;

@@ -1,25 +1,10 @@
-import React, { useState } from 'react';
-import { BsEmojiSmile } from "react-icons/bs";
-import { BsEmojiNeutral } from "react-icons/bs";
-import { BsEmojiFrown } from "react-icons/bs";
+// Modal.js
+import React from 'react';
+import { BsEmojiSmile, BsEmojiNeutral, BsEmojiFrown } from "react-icons/bs";
 
-function Modal() {
-  const [isOpen, setIsOpen] = useState(false);
-
-  const toggleModal = () => {
-    setIsOpen(!isOpen);
-  };
-
+function Modal({ isOpen, toggleModal }) {
   return (
     <div>
-      {/* Botão para abrir o modal */}
-      <button 
-        className="px-4 py-2 text-white bg-green-500 rounded-md" 
-        onClick={toggleModal}
-      >
-        Mais
-      </button>
-
       {/* Modal */}
       {isOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center">
@@ -40,7 +25,8 @@ function Modal() {
                 <input 
                   type="text" 
                   placeholder="Identificação" 
-                  className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-400" required
+                  className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-400" 
+                  required
                 />
               </div>
 
@@ -61,7 +47,8 @@ function Modal() {
               <div className="mb-4">
                 <textarea 
                   placeholder="Comentário (opcional)..." 
-                  className="w-full p-2 border border-gray-300 rounded-md resize-none focus:outline-none focus:ring-2 focus:ring-green-400" required
+                  className="w-full p-2 border border-gray-300 rounded-md resize-none focus:outline-none focus:ring-2 focus:ring-green-400" 
+                  required
                 ></textarea>
               </div>
 
@@ -70,6 +57,7 @@ function Modal() {
                 <button 
                   type="submit" 
                   className="px-4 py-2 text-white bg-green-500 rounded-full hover:bg-green-600"
+                  onClick={toggleModal} // Fecha o modal ao submeter
                 >
                   SALVAR
                 </button>

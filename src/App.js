@@ -9,8 +9,6 @@ import Modal from './components/modal.js';
 function App() {
   return (
     <>
-      <Modal />
-      <Cadastro />
       <HeaderNav />
       <Gradient />
       <Projetos />
