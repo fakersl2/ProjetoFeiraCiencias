@@ -5,10 +5,12 @@ import Avaliacoes from './pages/avaliacoes.js';
 import Projetos from './pages/Projetos.js';
 import Cadastro from './pages/cadastro.js';
 import Modal from './components/modal.js';
+import Login from './pages/login.js';
 
 function App() {
   return (
     <>
+    <Login />
       <HeaderNav />
       <Gradient />
       <Projetos />
