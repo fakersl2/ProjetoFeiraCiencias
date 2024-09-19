@@ -9,7 +9,7 @@ const Cadastro = () => {
                         {/* Espaço para Imagem */}
                     </div>
                     <h2 className="mb-4 text-2xl font-bold text-gray-700 md:text-3xl">Cadastrar</h2>
-                        <p className="mb-6 text-sm text-gray-600 md:text-base">Já possui conta? <a href="./login.js" className="text-green-600 hover:underline">Entrar</a></p>
+                        <p className="mb-6 text-sm text-gray-600 md:text-base">Já possui conta? <a href="/Login" className="text-green-600 hover:underline">Entrar</a></p>
 
                     <form action="" method="POST" className="bg-white">
                         <div className="mb-4">
