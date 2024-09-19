@@ -3,7 +3,7 @@ import { BsEmojiSmile } from "react-icons/bs";
 import { BsEmojiNeutral } from "react-icons/bs";
 import { BsEmojiFrown } from "react-icons/bs";
 
-const avaliacoes = () => {
+const Avaliacoes = () => {
     return (
         <div className="p-4 rounded-lg bg-green-50">
             <div className="flex items-center justify-between mb-2">
@@ -53,4 +53,4 @@ const avaliacoes = () => {
     )
 }
 
-export default avaliacoes;
+export default Avaliacoes;

@@ -1,6 +1,6 @@
 // Projetos.js
 import React, { useState } from 'react';
-import Modal from './modal';
+import Modal from '../components/modal';
 import AddIcon from '../assets/img/addicon.svg';
 
 const Projetos = () => {
