@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import PaginaErro from './pages/PaginaErro';
 import Avaliacoes from './pages/avaliacoes';
 import Cadastro from './pages/cadastro';
 import Footer from './pages/Footer';
@@ -13,6 +14,13 @@ export const Rotas = () => {
     return (
         <Router>
             <Routes>
+                {/* Rota pra caso a pessoa digite o caminho errado */}
+                <Route path="*" element={<PaginaErro />} />
+
+
+                {/* Rotas para as outras páginas, depois precisa colocar
+                todos os componentes da página principal em uma página só
+                e separar as outras*/}
                 <Route path="/avaliacoes" element={<Avaliacoes />} />
                 <Route path="/cadastro" element={<Cadastro />} />
                 <Route path="/footer" element={<Footer />} />
