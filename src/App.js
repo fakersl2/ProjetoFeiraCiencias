@@ -7,5 +7,4 @@ const App = () => {
   );
 };
 
-// Ensure this line is a default export
 export default App; 
