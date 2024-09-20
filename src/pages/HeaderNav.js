@@ -9,7 +9,7 @@ const HeaderNav = () => {
                 <div className="flex flex-wrap items-center justify-between max-w-screen-xl p-4 mx-auto">
                     <a target="_blank" href="http://colegiocomercialcpv.com.br/"
                         className="flex items-center space-x-3 rtl:space-x-reverse" rel="noreferrer">
-                        <img src={Logo} alt="Logo" className="w-auto h-8" />
+                        <img src={Logo} alt="Logo" className="w-auto h-12" />
                     </a>
                     <div className="flex items-center space-x-3 md:order-2 md:space-x-0 rtl:space-x-reverse">
                         <button type="button"

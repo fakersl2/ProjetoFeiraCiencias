@@ -18,7 +18,7 @@ const Login = () => {
                         </div>
 
                         <div className="mb-6">
-                            <button type="submit" className="flex items-center justify-center w-full px-4 py-2 text-white bg-green-500 border-2 border-gray-200 rounded-lg hover:bg-green-600 transition ease-in-out duration-300">
+                            <button type="submit" href="/Index" className="flex items-center justify-center w-full px-4 py-2 text-white bg-green-500 border-2 border-gray-200 rounded-lg hover:bg-green-600 transition ease-in-out duration-300">
                                 Entrar
                             </button>
                         </div>

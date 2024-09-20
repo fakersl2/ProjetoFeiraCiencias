@@ -9,9 +9,11 @@ import Headernav from './pages/HeaderNav';
 import Home from './pages/Home';
 import Login from './pages/login';
 import Projetos from './pages/Projetos';
+import Index from '../src/pages/Index';
+import Card from './pages/Card';
 
 export const Rotas = () => {
-    return (
+    return (S
         <Router>
             <Routes>
                 {/* Rota pra caso a pessoa digite o caminho errado */}
@@ -29,6 +31,7 @@ export const Rotas = () => {
                 <Route path="/home" element={<Home />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/Projetos" element={<Projetos />} />
+                <Route path="/Index" element={<Index />} />
             </Routes>
         </Router>
     );

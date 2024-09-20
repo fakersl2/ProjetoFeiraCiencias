@@ -37,6 +37,7 @@ const Projetos = () => {
                     <div className="pt-4">
                         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                             {/* Exemplo de card */}
+                            
                             <div className="flex items-center justify-between w-full p-4 bg-gray-100 border border-gray-200 rounded-lg shadow-md">
                                 <div>
                                     <h2 className="text-lg font-medium text-gray-800">Jogos</h2>
