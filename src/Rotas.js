@@ -9,8 +9,7 @@ import Headernav from './pages/HeaderNav';
 import Home from './pages/Home';
 import Login from './pages/login';
 import Projetos from './pages/Projetos';
-import Index from '../src/pages/Index';
-import Card from './pages/Card';
+import Inicio from './pages/Inicio';
 
 export const Rotas = () => {
     return (
@@ -31,7 +30,7 @@ export const Rotas = () => {
                 <Route path="/home" element={<Home />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/Projetos" element={<Projetos />} />
-                <Route path="/Index" element={<Index />} />
+                <Route path="/Inicio" element={<Inicio />} />
             </Routes>
         </Router>
     );

@@ -32,13 +32,13 @@ function Modal({ isOpen, toggleModal }) {
 
               {/* Emoji de votação */}
               <div className="flex justify-center mb-4">
-                <button type="button" className="text-green-500">
+                <button type="button" className="text-green-500 transition hover:scale-150 ease-in-out focus:ring-2 active:shadow rounded-full focus:ring-green-500 hover:ring-1">
                   <BsEmojiSmile />
                 </button>
-                <button type="button" className="mx-4 text-gray-500">
+                <button type="button" className="mx-4 text-gray-500 transition hover:scale-150 ease-in-out focus:ring-2 active:shadow rounded-full focus:ring-gray-500 hover:ring-1">
                   <BsEmojiNeutral />
                 </button>
-                <button type="button" className="text-red-500">
+                <button type="button" className="text-red-500 transition hover:scale-150 ease-in-out focus:ring-2 active:shadow rounded-full focus:ring-red-500 hover:ring-1">
                   <BsEmojiFrown />
                 </button>
               </div>

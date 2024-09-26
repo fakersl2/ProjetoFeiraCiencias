@@ -1,12 +1,12 @@
-import React, {useState} from 'react'
-import Home from './Home';
+import React from 'react'
 import Navbar from './HeaderNav';
+import Home from './Home';
 import Projetos from './Projetos';
 import Gradient from './Gradient';
-import Card from './Card';
+import Footer from './Footer';
 
 
-const Index = () => {
+const Inicio = () => {
   return (
     <>
     <Navbar />
@@ -17,4 +17,4 @@ const Index = () => {
   )
 }
 
-export default Index
+export default Inicio;
