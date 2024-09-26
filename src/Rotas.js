@@ -13,7 +13,7 @@ import Index from '../src/pages/Index';
 import Card from './pages/Card';
 
 export const Rotas = () => {
-    return (S
+    return (
         <Router>
             <Routes>
                 {/* Rota pra caso a pessoa digite o caminho errado */}
