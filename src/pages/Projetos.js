@@ -2,12 +2,18 @@
 import React, { useState } from 'react';
 import Modal from '../components/modal';
 import AddIcon from '../assets/img/addicon.svg';
+import ModalAdicionar from '../components/ModalAdicionar';
 
 const Projetos = () => {
     const [isOpen, setIsOpen] = useState(false);
+    const [isAddModalOpen, setIsAddModalOpen] = useState(false);
 
     const toggleModal = () => {
         setIsOpen(!isOpen);
+    };
+
+    const toggleAddModal = () => {
+        setIsAddModalOpen(!isAddModalOpen);
     };
 
     return (
@@ -15,11 +21,11 @@ const Projetos = () => {
 
             <h1 className="text-3xl font-bold text-black dark:text-white">Projetos</h1>
             <div className="flex flex-col gap-8 md:flex-row">
-                
+
                 <aside className="w-full pt-8 md:w-3/4">
                     {/* BOTAO DE PESQUISAR */}
                     <form className="flex items-center mx-auto">
-                        <label for="default-search" className="sr-only">Search</label>
+                        <label for="default-search" className="sr-only">Pesquisar</label>
                         <div className="relative w-full">
                             <input type="search" id="default-search"
                                 className="block w-full p-4 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-green-500 focus:border-green-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500"
@@ -37,7 +43,7 @@ const Projetos = () => {
                     <div className="pt-4">
                         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                             {/* Exemplo de card */}
-                            
+
                             <div className="flex items-center justify-between w-full p-4 bg-gray-100 border border-gray-200 rounded-lg shadow-md">
                                 <div>
                                     <h2 className="text-lg font-medium text-gray-800"><a href="/projeto" className="cursor-pointer">Jogos</a></h2>
@@ -55,7 +61,7 @@ const Projetos = () => {
 
                             <div className="flex items-center justify-between w-full p-4 bg-gray-100 border border-gray-200 rounded-lg shadow-md">
                                 <div>
-                                <h2 className="text-lg font-medium text-gray-800">Jogos</h2>
+                                    <h2 className="text-lg font-medium text-gray-800">Jogos</h2>
                                     <div className="space-x-4 text-sm text-gray-500">
                                         <span>Matemática</span>
                                         <span>2B</span>
@@ -67,11 +73,11 @@ const Projetos = () => {
                                     <img src={AddIcon} alt="+" />
                                 </button>
                             </div>
-                            
+
                             {/* CARD2 */}
                             <div className="flex items-center justify-between w-full p-4 bg-gray-100 border border-gray-200 rounded-lg shadow-md">
                                 <div>
-                                <h2 className="text-lg font-medium text-gray-800">Jogos</h2>
+                                    <h2 className="text-lg font-medium text-gray-800">Jogos</h2>
                                     <div className="space-x-4 text-sm text-gray-500">
                                         <span>Matemática</span>
                                         <span>2B</span>
@@ -83,22 +89,25 @@ const Projetos = () => {
                                     <img src={AddIcon} alt="+" />
                                 </button>
                             </div>
-                            
+
                             {/* CARD3 */}
                             <div className="flex items-center justify-between w-full p-4 bg-gray-100 border-2 border-gray-200 border-dashed rounded-lg shadow-md hover:shadow-lg">
                                 <div>
-                                <h2 className="text-lg font-medium text-gray-800">Adicionar Novo Projeto</h2>
+                                    <h2 className="text-lg font-medium text-gray-800">Adicionar Novo Projeto</h2>
                                     <div className="space-x-4 text-sm text-gray-500">
                                         <span>Disciplinas</span>
                                         <span>Salas</span>
                                     </div>
                                 </div>
                                 <button
-                                    onClick={toggleModal}
-                                    className="relative flex items-center justify-center w-10 h-10 text-2xl font-bold text-gray-800 transition-all duration-300 ease-in-out rounded-full hover:bg-gray-200 hover:ring-2 hover:ring-gray-400 hover:shadow-lg">
-                                    <img src={AddIcon} alt="+" />
+                                    onClick={toggleAddModal}
+                                    className="relative flex items-center justify-center w-10 h-10 text-2xl font-bold text-gray-800 transition-all duration-300 ease-in-out rounded-full hover:bg-gray-200 hover:ring-2 hover:ring-gray-400 hover:shadow-lg"
+                                    aria-label="Adicionar Novo Projeto"
+                                >
+                                    <img src={AddIcon} alt="Adicionar" />
                                 </button>
                             </div>
+
                             {/* Adicione mais cards conforme necessário */}
                         </div>
                     </div>
@@ -112,7 +121,7 @@ const Projetos = () => {
                     </select>
                     </span>
                     <div className="mt-4">
-                        <h2 className="pl-3 py-1 rounded-md text-2xl text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600">
+                        <h2 className="py-1 pl-3 text-2xl text-white rounded-md bg-gradient-to-r from-green-400 via-green-500 to-green-600">
                             Filtrar por
                             Disciplina</h2>
                     </div>
@@ -154,9 +163,8 @@ const Projetos = () => {
                         </li>
                     </ul>
                     <div className="mt-4">
-                        <h2 className="pl-3 py-1 rounded-md text-2xl text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600">
-                            Filtrar por
-                            Turma</h2>
+                        <h2 className="py-1 pl-3 text-2xl text-white rounded-md bg-gradient-to-r from-green-400 via-green-500 to-green-600">
+                            Filtrar por Turma</h2>
                     </div>
                     <ul className="p-4 space-y-2">
 
@@ -202,6 +210,11 @@ const Projetos = () => {
 
             {/* Modal */}
             <Modal isOpen={isOpen} toggleModal={toggleModal} />
+
+            {/* Modal 2 */}
+            {isAddModalOpen && (
+                <ModalAdicionar isOpen={isAddModalOpen} toggleModal={toggleAddModal} />
+            )}
         </div>
     );
 };
