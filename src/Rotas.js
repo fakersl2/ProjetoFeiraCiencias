@@ -10,6 +10,7 @@ import Home from './pages/Home';
 import Login from './pages/login';
 import Projetos from './pages/Projetos';
 import Inicio from './pages/Inicio';
+import Projeto2 from './pages/Projeto2';
 
 export const Rotas = () => {
     return (
@@ -29,8 +30,9 @@ export const Rotas = () => {
                 <Route path="/headernav" element={<Headernav />} />
                 <Route path="/home" element={<Home />} />
                 <Route path="/login" element={<Login />} />
-                <Route path="/Projetos" element={<Projetos />} />
-                <Route path="/Inicio" element={<Inicio />} />
+                <Route path="/projetos" element={<Projetos />} />
+                <Route path="/inicio" element={<Inicio />} />
+                <Route path="/projeto" element={<Projeto2 />} />
             </Routes>
         </Router>
     );

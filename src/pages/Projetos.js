@@ -40,7 +40,7 @@ const Projetos = () => {
                             
                             <div className="flex items-center justify-between w-full p-4 bg-gray-100 border border-gray-200 rounded-lg shadow-md">
                                 <div>
-                                    <h2 className="text-lg font-medium text-gray-800">Jogos</h2>
+                                    <h2 className="text-lg font-medium text-gray-800"><a href="/projeto" className="cursor-pointer">Jogos</a></h2>
                                     <div className="space-x-4 text-sm text-gray-500">
                                         <span>Química</span>
                                         <span>2B</span>
@@ -67,7 +67,8 @@ const Projetos = () => {
                                     <img src={AddIcon} alt="+" />
                                 </button>
                             </div>
-
+                            
+                            {/* CARD2 */}
                             <div className="flex items-center justify-between w-full p-4 bg-gray-100 border border-gray-200 rounded-lg shadow-md">
                                 <div>
                                 <h2 className="text-lg font-medium text-gray-800">Jogos</h2>
@@ -83,6 +84,7 @@ const Projetos = () => {
                                 </button>
                             </div>
                             
+                            {/* CARD3 */}
                             <div className="flex items-center justify-between w-full p-4 bg-gray-100 border-2 border-gray-200 border-dashed rounded-lg shadow-md hover:shadow-lg">
                                 <div>
                                 <h2 className="text-lg font-medium text-gray-800">Adicionar Novo Projeto</h2>
