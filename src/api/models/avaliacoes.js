@@ -15,8 +15,9 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   avaliacoes.init({
-    nota: DataTypes.INTEGER,
+    nota: DataTypes.STRING,
     comentario: DataTypes.STRING,
+    codigo:DataTypes.INTEGER,
     projeto_id: DataTypes.INTEGER,
     usuario_id: DataTypes.INTEGER
   }, {

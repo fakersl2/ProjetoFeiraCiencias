@@ -1,4 +1,4 @@
-'use strict';
+
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
@@ -23,6 +23,8 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
+    // await queryInterface.sequelize.query('PRAGMA foreign_keys = OFF;');
     await queryInterface.dropTable('categorias');
+    await queryInterface.sequelize.query('PRAGMA foreign_keys = ON;');
   }
 };

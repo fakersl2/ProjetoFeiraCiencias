@@ -9,8 +9,11 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      nota: {
+      codigo:{
         type: Sequelize.INTEGER
+      },
+      nota: {
+        type: Sequelize.STRING
       },
       comentario: {
         type: Sequelize.STRING
