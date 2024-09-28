@@ -101,6 +101,7 @@ module.exports = class ProjetoController {
 
       res.status(200).json(novoVoto)
     } catch (error) {
+      console.log(error.message)
       res.status(400).json(error.message);
     }
   }
