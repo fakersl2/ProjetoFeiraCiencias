@@ -12,15 +12,14 @@ module.exports = class ProjetoController {
   }
 
   static async criaProjeto(req, res) {
-    const { nome, desc, categoria, turma } = req.body;
+    const { nome, descricao, categoria, turma } = req.body;
 
     try {
       //PROCURA PROJETO
       const existe = await database.projetos.findOne({
         where: {
-          nome: nome,
-          descricao: desc,
-          turma_id:turma
+          turma_id:turma,
+          categoria_id:categoria
         },
       });
       if (existe) {
@@ -49,7 +48,7 @@ module.exports = class ProjetoController {
       //CRIA PROJETO
       const projeto = await database.projetos.create({
         nome: nome,
-        descricao: desc,
+        descricao: descricao,
         turma_id: turma,
         categoria_id:categoria
       });
@@ -164,4 +163,43 @@ module.exports = class ProjetoController {
     }
   }
 
+  static async procuraCategoriaPorId(req,res){
+    const { id } = req.params;
+    try {
+      const categoria = await database.categorias.findByPk(id);
+
+      res.status(200).json(categoria)
+    } catch (error) {
+      res.status(400).json(error.message)
+    }
+  }
+  static async procuraTurmaPorId(req,res){
+    const { id } = req.params;
+    try {
+      const turma = await database.turmas.findByPk(id);
+
+      res.status(200).json(turma)
+    } catch (error) {
+      res.status(400).json(error.message)
+    }
+  }
+
+  static async pegaTodasCategorias(req,res){
+    try {
+      const categorias = await database.categorias.findAll();
+
+      res.status(200).json(categorias)
+    } catch (error) {
+      res.status(400).json(error.message)
+    }
+  }
+  static async pegaTodasTurmas(req,res){
+    try {
+      const turmas = await database.turmas.findAll();
+
+      res.status(200).json(turmas)
+    } catch (error) {
+      res.status(400).json(error.message)
+    }
+  }
 };

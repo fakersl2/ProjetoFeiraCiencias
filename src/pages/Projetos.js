@@ -9,6 +9,8 @@ function Projetos({ listaProjetos }) {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [selectedProjectId, setSelectedProjectId] = useState(null);
   const [projetos, setProjetos] = useState([]);
+  const [turmas, setTurmas] = useState({});
+  const [categorias, setCategorias] = useState({});
 
   const toggleModal = (projectId = null) => {
     console.log("Toggling modal for project ID:", projectId); // Adicione este log
@@ -20,13 +22,57 @@ function Projetos({ listaProjetos }) {
     setIsAddModalOpen(!isAddModalOpen);
   };
 
+  const fetchTurmaNome = async (turmaId) => {
+    try {
+      const response = await axios.get(
+        `http://localhost:5000/turmas/${turmaId}`
+      );
+      return response.data.nome;
+    } catch (error) {
+      console.error("Erro ao buscar turma:", error);
+      return null;
+    }
+  };
+  const fetchCategoriaNome = async (categoriaId) => {
+    try {
+      const response = await axios.get(
+        `http://localhost:5000/categorias/${categoriaId}`
+      );
+      return response.data.nome;
+    } catch (error) {
+      console.error("Erro ao buscar categoria:", error);
+      return null;
+    }
+  };
+
   useEffect(() => {
     const fetchProjetos = async () => {
       try {
         const response = await axios.get("http://localhost:5000/projetos");
         const userId = localStorage.getItem("userId");
         console.log("UserID: ", userId);
-        setProjetos(response.data);
+        const projetosData = response.data;
+
+        // Buscar nomes das turmas
+        const turmasData = {};
+        for (const projeto of projetosData) {
+          if (projeto.turma_id) {
+            const turmaNome = await fetchTurmaNome(projeto.turma_id);
+            turmasData[projeto.turma_id] = turmaNome;
+          }
+        }
+        // Buscar nomes das categorias
+        const categoriasData = {};
+        for (const projeto of projetosData) {
+          if (projeto.categoria_id) {
+            const categoriaNome = await fetchCategoriaNome(projeto.categoria_id);
+            categoriasData[projeto.categoria_id] = categoriaNome;
+          }
+        }
+
+        setProjetos(projetosData);
+        setTurmas(turmasData);
+        setCategorias(categoriasData)
       } catch (error) {
         console.error("Erro ao buscar projetos:", error);
       }
@@ -34,6 +80,7 @@ function Projetos({ listaProjetos }) {
 
     fetchProjetos();
   }, []);
+
   return (
     <div className="container px-4 py-8 mx-auto bg-white">
       <h1 className="text-3xl font-bold text-black dark:text-white">
@@ -93,8 +140,8 @@ function Projetos({ listaProjetos }) {
                       </a>
                     </h2>
                     <div className="space-x-4 text-sm text-gray-500">
-                      <span>{projeto.categoria}</span>
-                      <span>{projeto.turma}</span>
+                      <span>{categorias[projeto.categoria_id]}</span>
+                      <span>{turmas[projeto.turma_id]}</span>
                     </div>
                   </div>
                   <button
@@ -105,6 +152,7 @@ function Projetos({ listaProjetos }) {
                   </button>
                 </div>
               ))}
+
               <Modal
                 isOpen={isOpen}
                 toggleModal={toggleModal}
