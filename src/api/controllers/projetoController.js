@@ -141,6 +141,17 @@ module.exports = class ProjetoController {
     }
   }
 
+  static async buscaProjetoPorId(req,res){
+    const { id } = req.params;
+
+    try {
+      const projeto = await database.projetos.findByPk(id)
+
+      res.status(200).json(projeto)
+    } catch (error) {
+      res.status(400).json(error.message)
+    }
+  }
   static async procuraPorNome(req,res){
     const { nome } = req.params
     try {
@@ -229,6 +240,21 @@ module.exports = class ProjetoController {
       res.status(200).json(filtro)
     } catch (error) {
       res.status(400).json(error.message)
+    }
+  }
+
+  static async procurarVotosPorId(req,res){
+    const { id } = req.params;
+
+    try {
+      const avaliacao = await database.avaliacoes.findAll({
+        where:{
+          projeto_id: id
+        }
+      })
+      res.status(200).json(avaliacao)
+    } catch (error) {
+      res.status(400).json(error.message)      
     }
   }
 };

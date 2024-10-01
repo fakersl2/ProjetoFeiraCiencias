@@ -32,7 +32,7 @@ export const Rotas = () => {
                 <Route path="/login" element={<Login />} />
                 <Route path="/projetos" element={<Projetos />} />
                 <Route path="/inicio" element={<Inicio />} />
-                <Route path="/projeto" element={<Projeto2 />} />
+                <Route path="/projeto/:id" element={<Projeto2 />} />
             </Routes>
         </Router>
     );

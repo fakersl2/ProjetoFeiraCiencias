@@ -23,6 +23,8 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
+    // await queryInterface.sequelize.query('PRAGMA foreign_keys = OFF;');
     await queryInterface.dropTable('turmas');
+    await queryInterface.sequelize.query('PRAGMA foreign_keys = ON;');
   }
 };

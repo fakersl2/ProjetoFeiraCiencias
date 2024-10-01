@@ -221,13 +221,6 @@ function Projetos({ listaProjetos }) {
 
         {/* Componente de filtro, se necessário */}
         <aside className="w-full pt-8 md:w-1/4">
-          <span>
-            Ordenar por:{" "}
-            <select className="ml-2" name="" id="">
-              <option value="a-pra-z">A-Z</option>
-              <option value="z-pra-a">Z-A</option>
-            </select>
-          </span>
           <div className="mt-4">
             <h2 className="py-1 pl-3 text-2xl text-white rounded-md bg-gradient-to-r from-green-400 via-green-500 to-green-600">
               Filtrar por Disciplina
