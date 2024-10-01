@@ -12,7 +12,7 @@ module.exports = class ProjetoController {
   }
 
   static async criaProjeto(req, res) {
-    const { nome, desc, categoria } = req.body;
+    const { nome, desc, categoria, turma } = req.body;
 
     try {
       //PROCURA PROJETO
@@ -20,6 +20,7 @@ module.exports = class ProjetoController {
         where: {
           nome: nome,
           descricao: desc,
+          turma_id:turma
         },
       });
       if (existe) {
@@ -35,11 +36,22 @@ module.exports = class ProjetoController {
       if (!procuraCategoria) {
         throw new Error("Nao foi possivel encontrar categoria");
       }
+      //PROCURA TURMA
+      const procuraTurma = await database.turmas.findOne({
+        where: {
+          id: turma,
+        },
+      });
+      if (!procuraTurma) {
+        throw new Error("Nao foi possivel encontrar turma");
+      }
 
       //CRIA PROJETO
       const projeto = await database.projetos.create({
         nome: nome,
         descricao: desc,
+        turma_id: turma,
+        categoria_id:categoria
       });
 
       //CRIA RELAÇÃO
@@ -47,8 +59,12 @@ module.exports = class ProjetoController {
         projeto_id: projeto.id,
         categoria_id: procuraCategoria.id,
       });
+      const criaRelacao2 = await database.projetosXturmas.create({
+        projeto_id: projeto.id,
+        turma_id: procuraTurma.id,
+      });
 
-      res.status(200).json({ projeto, criaRelacao });
+      res.status(200).json({ projeto, criaRelacao, criaRelacao2 });
     } catch (error) {
       res.status(400).json(error.message);
     }
@@ -68,6 +84,26 @@ module.exports = class ProjetoController {
           nome: nome,
         });
         res.status(200).json(categoria);
+      }
+    } catch (error) {
+      res.status(400).json(error.message);
+    }
+  }
+
+  static async criaTurma(req, res){
+    const { nome } = req.body;
+    try {
+      const existe = await database.turmas.findOne({
+        where: {
+          nome: nome,
+        },
+      });
+
+      if (!existe) {
+        const turma = await database.turmas.create({
+          nome: nome,
+        });
+        res.status(200).json(turma);
       }
     } catch (error) {
       res.status(400).json(error.message);
