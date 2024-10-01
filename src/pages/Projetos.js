@@ -9,11 +9,14 @@ function Projetos({ listaProjetos }) {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [selectedProjectId, setSelectedProjectId] = useState(null);
   const [projetos, setProjetos] = useState([]);
-  const [turmas, setTurmas] = useState({});
-  const [categorias, setCategorias] = useState({});
+  const [turmas, setTurmas] = useState([]);
+  const [categorias, setCategorias] = useState([]);
+  const [selectedCategories, setSelectedCategories] = useState([]);
+  const [selectedClasses, setSelectedClasses] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
 
   const toggleModal = (projectId = null) => {
-    console.log("Toggling modal for project ID:", projectId); // Adicione este log
+    console.log("Toggling modal for project ID:", projectId);
     setSelectedProjectId(projectId);
     setIsOpen(!isOpen);
   };
@@ -22,30 +25,37 @@ function Projetos({ listaProjetos }) {
     setIsAddModalOpen(!isAddModalOpen);
   };
 
-  const fetchTurmaNome = async (turmaId) => {
+  const handleSearch = async (e) => {
+    e.preventDefault();
     try {
       const response = await axios.get(
-        `http://localhost:5000/turmas/${turmaId}`
+        `http://localhost:5000/projetos/nome/${searchTerm}`
       );
-      return response.data.nome;
+      setProjetos(response.data);
     } catch (error) {
-      console.error("Erro ao buscar turma:", error);
-      return null;
-    }
-  };
-  const fetchCategoriaNome = async (categoriaId) => {
-    try {
-      const response = await axios.get(
-        `http://localhost:5000/categorias/${categoriaId}`
-      );
-      return response.data.nome;
-    } catch (error) {
-      console.error("Erro ao buscar categoria:", error);
-      return null;
+      console.error("Erro ao buscar projetos:", error);
     }
   };
 
   useEffect(() => {
+    axios
+      .get("http://localhost:5000/turmas")
+      .then((response) => {
+        setTurmas(response.data);
+      })
+      .catch((error) => {
+        console.error("Erro ao buscar turmas:", error);
+      });
+
+    axios
+      .get("http://localhost:5000/categorias")
+      .then((response) => {
+        setCategorias(response.data);
+      })
+      .catch((error) => {
+        console.error("Erro ao buscar categorias:", error);
+      });
+
     const fetchProjetos = async () => {
       try {
         const response = await axios.get("http://localhost:5000/projetos");
@@ -53,26 +63,7 @@ function Projetos({ listaProjetos }) {
         console.log("UserID: ", userId);
         const projetosData = response.data;
 
-        // Buscar nomes das turmas
-        const turmasData = {};
-        for (const projeto of projetosData) {
-          if (projeto.turma_id) {
-            const turmaNome = await fetchTurmaNome(projeto.turma_id);
-            turmasData[projeto.turma_id] = turmaNome;
-          }
-        }
-        // Buscar nomes das categorias
-        const categoriasData = {};
-        for (const projeto of projetosData) {
-          if (projeto.categoria_id) {
-            const categoriaNome = await fetchCategoriaNome(projeto.categoria_id);
-            categoriasData[projeto.categoria_id] = categoriaNome;
-          }
-        }
-
         setProjetos(projetosData);
-        setTurmas(turmasData);
-        setCategorias(categoriasData)
       } catch (error) {
         console.error("Erro ao buscar projetos:", error);
       }
@@ -80,6 +71,34 @@ function Projetos({ listaProjetos }) {
 
     fetchProjetos();
   }, []);
+
+  const handleCategoryChange = (categoryId) => {
+    setSelectedCategories((prevSelected) => {
+      if (prevSelected.includes(categoryId)) {
+        return prevSelected.filter((id) => id !== categoryId);
+      } else {
+        return [...prevSelected, categoryId];
+      }
+    });
+  };
+
+  const handleClassChange = (classId) => {
+    setSelectedClasses((prevSelected) => {
+      if (prevSelected.includes(classId)) {
+        return prevSelected.filter((id) => id !== classId);
+      } else {
+        return [...prevSelected, classId];
+      }
+    });
+  };
+
+  const filteredProjetos = projetos.filter(
+    (projeto) =>
+      (selectedCategories.length === 0 ||
+        selectedCategories.includes(projeto.categoria_id)) &&
+      (selectedClasses.length === 0 ||
+        selectedClasses.includes(projeto.turma_id))
+  );
 
   return (
     <div className="container px-4 py-8 mx-auto bg-white">
@@ -89,7 +108,7 @@ function Projetos({ listaProjetos }) {
       <div className="flex flex-col gap-8 md:flex-row">
         <aside className="w-full pt-8 md:w-3/4">
           {/* BOTAO DE PESQUISAR */}
-          <form className="flex items-center mx-auto">
+          <form className="flex items-center mx-auto" onSubmit={handleSearch}>
             <label htmlFor="default-search" className="sr-only">
               Pesquisar
             </label>
@@ -100,6 +119,8 @@ function Projetos({ listaProjetos }) {
                 className="block w-full p-4 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-green-500 focus:border-green-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500"
                 placeholder="Buscar..."
                 required
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
               />
               <button
                 type="submit"
@@ -123,9 +144,10 @@ function Projetos({ listaProjetos }) {
               </button>
             </div>
           </form>
+
           <div className="pt-4">
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-              {projetos.map((projeto, index) => (
+              {filteredProjetos.map((projeto) => (
                 <div
                   key={projeto.id}
                   className="flex items-center justify-between w-full p-4 bg-gray-100 border border-gray-200 rounded-lg shadow-md"
@@ -140,8 +162,19 @@ function Projetos({ listaProjetos }) {
                       </a>
                     </h2>
                     <div className="space-x-4 text-sm text-gray-500">
-                      <span>{categorias[projeto.categoria_id]}</span>
-                      <span>{turmas[projeto.turma_id]}</span>
+                      <span>
+                        {
+                          categorias.find(
+                            (cat) => cat.id === projeto.categoria_id
+                          )?.nome
+                        }
+                      </span>
+                      <span>
+                        {
+                          turmas.find((turma) => turma.id === projeto.turma_id)
+                            ?.nome
+                        }
+                      </span>
                     </div>
                   </div>
                   <button
@@ -152,7 +185,6 @@ function Projetos({ listaProjetos }) {
                   </button>
                 </div>
               ))}
-
               <Modal
                 isOpen={isOpen}
                 toggleModal={toggleModal}
@@ -202,104 +234,24 @@ function Projetos({ listaProjetos }) {
             </h2>
           </div>
           <ul className="p-4 space-y-2">
-            <li className="flex items-center">
-              <input
-                id="portugues"
-                type="checkbox"
-                value="portugues"
-                className="w-4 h-4 text-green-600 bg-gray-100 border-gray-300 rounded focus:ring-green-500 focus:ring-2"
-              />
-              <label
-                htmlFor="portugues"
-                className="ml-2 text-sm font-medium text-gray-900"
-              >
-                Português
-              </label>
-            </li>
-            <li className="flex items-center">
-              <input
-                id="matematica"
-                type="checkbox"
-                value="matematica"
-                className="w-4 h-4 text-green-600 bg-gray-100 border-gray-300 rounded focus:ring-green-500 focus:ring-2"
-              />
-              <label
-                htmlFor="matematica"
-                className="ml-2 text-sm font-medium text-gray-900"
-              >
-                Matemática
-              </label>
-            </li>
-            <li className="flex items-center">
-              <input
-                id="quimica"
-                type="checkbox"
-                value="quimica"
-                className="w-4 h-4 text-green-600 bg-gray-100 border-gray-300 rounded focus:ring-green-500 focus:ring-2"
-              />
-              <label
-                htmlFor="quimica"
-                className="ml-2 text-sm font-medium text-gray-900"
-              >
-                Química
-              </label>
-            </li>
-            <li className="flex items-center">
-              <input
-                id="fisica"
-                type="checkbox"
-                value="fisica"
-                className="w-4 h-4 text-green-600 bg-gray-100 border-gray-300 rounded focus:ring-green-500 focus:ring-2"
-              />
-              <label
-                htmlFor="fisica"
-                className="ml-2 text-sm font-medium text-gray-900"
-              >
-                Física
-              </label>
-            </li>
-            <li className="flex items-center">
-              <input
-                id=""
-                type="checkbox"
-                value="biologia"
-                className="w-4 h-4 text-green-600 bg-gray-100 border-gray-300 rounded focus:ring-green-500 focus:ring-2"
-              />
-              <label
-                htmlFor="biologia"
-                className="ml-2 text-sm font-medium text-gray-900"
-              >
-                Biologia
-              </label>
-            </li>
-            <li className="flex items-center">
-              <input
-                id="artes"
-                type="checkbox"
-                value="artes"
-                className="w-4 h-4 text-green-600 bg-gray-100 border-gray-300 rounded focus:ring-green-500 focus:ring-2"
-              />
-              <label
-                htmlFor="artes"
-                className="ml-2 text-sm font-medium text-gray-900"
-              >
-                Artes
-              </label>
-            </li>
-            <li className="flex items-center">
-              <input
-                id="empreendedorismo"
-                type="checkbox"
-                value="empreendedorismo"
-                className="w-4 h-4 text-green-600 bg-gray-100 border-gray-300 rounded focus:ring-green-500 focus:ring-2"
-              />
-              <label
-                htmlFor="empreendedorismo"
-                className="ml-2 text-sm font-medium text-gray-900"
-              >
-                Empreendedorismo
-              </label>
-            </li>
+            {Array.isArray(categorias) &&
+              categorias.map((categoria) => (
+                <li key={categoria.id} className="flex items-center">
+                  <input
+                    id={categoria.id}
+                    type="checkbox"
+                    value={categoria.id}
+                    onChange={() => handleCategoryChange(categoria.id)}
+                    className="w-4 h-4 text-green-600 bg-gray-100 border-gray-300 rounded focus:ring-green-500 focus:ring-2"
+                  />
+                  <label
+                    htmlFor={categoria.id}
+                    className="ml-2 text-sm font-medium text-gray-900"
+                  >
+                    {categoria.nome}
+                  </label>
+                </li>
+              ))}
           </ul>
           <div className="mt-4">
             <h2 className="py-1 pl-3 text-2xl text-white rounded-md bg-gradient-to-r from-green-400 via-green-500 to-green-600">
@@ -307,105 +259,24 @@ function Projetos({ listaProjetos }) {
             </h2>
           </div>
           <ul className="p-4 space-y-2">
-            <li className="flex items-center">
-              <input
-                id="primeiro-b"
-                type="checkbox"
-                value="primeiro-a"
-                className="w-4 h-4 text-green-600 bg-gray-100 border-gray-300 rounded focus:ring-green-500 focus:ring-2"
-              />
-              <label
-                htmlFor="primeiro-a"
-                className="ml-2 text-sm font-medium text-gray-900"
-              >
-                1A
-              </label>
-            </li>
-            <li className="flex items-center">
-              <input
-                id="primeiro-b"
-                type="checkbox"
-                value="primeiro-b"
-                className="w-4 h-4 text-green-600 bg-gray-100 border-gray-300 rounded focus:ring-green-500 focus:ring-2"
-              />
-              <label
-                htmlFor="primeiro-b"
-                className="ml-2 text-sm font-medium text-gray-900"
-              >
-                1B
-              </label>
-            </li>
-            <li className="flex items-center">
-              <input
-                id="primeiro-c"
-                type="checkbox"
-                value="primeiro-c"
-                className="w-4 h-4 text-green-600 bg-gray-100 border-gray-300 rounded focus:ring-green-500 focus:ring-2"
-              />
-              <label
-                htmlFor="primeiro-c"
-                className="ml-2 text-sm font-medium text-gray-900"
-              >
-                1C
-              </label>
-            </li>
-            <li className="flex items-center">
-              <input
-                id=""
-                type="checkbox"
-                value=""
-                className="w-4 h-4 text-green-600 bg-gray-100 border-gray-300 rounded focus:ring-green-500 focus:ring-2"
-              />
-              <label
-                htmlFor=""
-                className="ml-2 text-sm font-medium text-gray-900"
-              >
-                2A
-              </label>
-            </li>
-            <li className="flex items-center">
-              <input
-                id=""
-                type="checkbox"
-                value=""
-                className="w-4 h-4 text-green-600 bg-gray-100 border-gray-300 rounded focus:ring-green-500 focus:ring-2"
-              />
-              <label
-                htmlFor=""
-                className="ml-2 text-sm font-medium text-gray-900"
-              >
-                2B
-              </label>
-            </li>
-            <li className="flex items-center">
-              <input
-                id="..."
-                type="checkbox"
-                value="..."
-                className="w-4 h-4 text-green-600 bg-gray-100 border-gray-300 rounded focus:ring-green-500 focus:ring-2"
-              />
-              <label
-                htmlFor="..."
-                className="ml-2 text-sm font-medium text-gray-900"
-              >
-                3A
-              </label>
-            </li>
-
-            <li className="flex items-center">
-              <input
-                id="..."
-                type="checkbox"
-                value="..."
-                className="w-4 h-4 text-green-600 bg-gray-100 border-gray-300 rounded focus:ring-green-500 focus:ring-2"
-              />
-              <label
-                htmlFor="..."
-                className="ml-2 text-sm font-medium text-gray-900"
-              >
-                3B
-              </label>
-            </li>
+            {Array.isArray(turmas) &&
+              turmas.map((turma) => (
+                <li key={turma.id} className="flex items-center">
+                  <input
+                    id={turma.id}
+                    type="checkbox"
+                    value={turma.id}
+                    onChange={() => handleClassChange(turma.id)}
+                    className="w-4 h-4 text-green-600 bg-gray-100 border-gray-300 rounded focus:ring-green-500 focus:ring-2"
+                  />
+                  <label
+                    htmlFor={turma.id}
+                    className="ml-2 text-sm font-medium text-gray-900"
+                  >
+                    {turma.nome}
+                  </label>
+                </li>
+              ))}
           </ul>
         </aside>
       </div>

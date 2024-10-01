@@ -202,4 +202,33 @@ module.exports = class ProjetoController {
       res.status(400).json(error.message)
     }
   }
+
+  static async filtrarCategoriaPorId(req,res){
+    const { id } = req.params;
+    try {
+      const filtro = await database.projetos.findAll({
+        where:{
+          categoria_id: id
+        }
+      })
+
+      res.status(200).json(filtro)
+    } catch (error) {
+      res.status(400).json(error.message)
+    }
+  }
+  static async filtrarTurmaPorId(req,res){
+    const { id } = req.params;
+    try {
+      const filtro = await database.projetos.findAll({
+        where:{
+          turma_id: id
+        }
+      })
+
+      res.status(200).json(filtro)
+    } catch (error) {
+      res.status(400).json(error.message)
+    }
+  }
 };
