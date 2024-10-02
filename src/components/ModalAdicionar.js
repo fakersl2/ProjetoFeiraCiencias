@@ -1,24 +1,50 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
-function ModalAdicionar({ isOpen, toggleModal, categorias = [] }) {
+function ModalAdicionar({ isOpen, toggleModal }) {
   const [nomeProjeto, setNomeProjeto] = useState('');
   const [descricaoProjeto, setDescricaoProjeto] = useState('');
   const [categoria, setCategoria] = useState('');
   const [turma, setTurma] = useState('');
+  const [categorias, setCategorias] = useState([]);
+  const [turmas, setTurmas] = useState([]);
+  const [errorMessage, setErrorMessage] = useState('');
+
+  useEffect(() => {
+    // Fetch categorias
+    axios.get('http://localhost:5000/categorias')
+      .then(response => setCategorias(response.data))
+      .catch(error => console.error('Erro ao buscar categorias:', error));
+
+    // Fetch turmas
+    axios.get('http://localhost:5000/turmas')
+      .then(response => setTurmas(response.data))
+      .catch(error => console.error('Erro ao buscar turmas:', error));
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log({
+    const projeto = {
       nome: nomeProjeto,
       descricao: descricaoProjeto,
-      categoria,
-      turma,
-    });
-    setNomeProjeto('');
-    setDescricaoProjeto('');
-    setCategoria('');
-    setTurma('');
-    toggleModal();
+      categoria: categoria,
+      turma: turma,
+    };
+
+    axios.post('http://localhost:5000/projetos', projeto)
+      .then(response => {
+        console.log('Projeto salvo com sucesso:', response.data);
+        setNomeProjeto('');
+        setDescricaoProjeto('');
+        setCategoria('');
+        setTurma('');
+        setErrorMessage(''); // Limpa a mensagem de erro
+        toggleModal();
+      })
+      .catch(error => {
+        console.error('Erro ao salvar projeto:', error);
+        setErrorMessage('Ocorreu um erro ao salvar o projeto. Por favor, tente novamente.' + error.message);
+      });
   };
 
   if (!isOpen) return null; // Retorna null se o modal não estiver aberto
@@ -50,9 +76,9 @@ function ModalAdicionar({ isOpen, toggleModal, categorias = [] }) {
             required
           >
             <option value="">Selecione a Categoria</option>
-            {['Português', 'Matemática', 'Química', 'Física', 'Biologia', 'Artes', 'Empreendedorismo'].map((cat) => (
-              <option key={cat} value={cat}>
-                {cat}
+            {categorias.map((cat) => (
+              <option key={cat.id} value={cat.id}>
+                {cat.nome}
               </option>
             ))}
           </select>
@@ -64,9 +90,9 @@ function ModalAdicionar({ isOpen, toggleModal, categorias = [] }) {
             required
           >
             <option value="">Selecione a Turma</option>
-            {['1A', '1B', '1C', '2A', '2B', '3A', '3B'].map((cat) => (
-              <option key={cat} value={cat}>
-                {cat}
+            {turmas.map((turma) => (
+              <option key={turma.id} value={turma.id}>
+                {turma.nome}
               </option>
             ))}
           </select>
@@ -74,6 +100,9 @@ function ModalAdicionar({ isOpen, toggleModal, categorias = [] }) {
             SALVAR
           </button>
         </form>
+        {errorMessage && (
+          <p className="mt-4 text-red-500">{errorMessage}</p>
+        )}
       </div>
     </div>
   );

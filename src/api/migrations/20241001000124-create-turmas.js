@@ -2,7 +2,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('projetos', {
+    await queryInterface.createTable('turmas', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -11,19 +11,6 @@ module.exports = {
       },
       nome: {
         type: Sequelize.STRING
-      },
-      descricao: {
-        type: Sequelize.STRING
-      },
-      categoria_id: {
-        allowNull: false,
-        type: Sequelize.INTEGER,
-        references: { model: 'categorias', key: 'id' }
-      },
-      turma_id: {
-        allowNull: false,
-        type: Sequelize.INTEGER,
-        references: { model: 'turmas', key: 'id' }
       },
       createdAt: {
         allowNull: false,
@@ -37,7 +24,7 @@ module.exports = {
   },
   async down(queryInterface, Sequelize) {
     // await queryInterface.sequelize.query('PRAGMA foreign_keys = OFF;');
-    await queryInterface.dropTable('projetos');
+    await queryInterface.dropTable('turmas');
     await queryInterface.sequelize.query('PRAGMA foreign_keys = ON;');
   }
 };
