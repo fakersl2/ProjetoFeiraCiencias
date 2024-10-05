@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import AddIcon from "../assets/img/addicon.svg";
 
 function ModalAdicionar({ isOpen, toggleModal }) {
   const [nomeProjeto, setNomeProjeto] = useState('');
@@ -14,7 +15,7 @@ function ModalAdicionar({ isOpen, toggleModal }) {
     // Fetch categorias
     axios.get('http://localhost:5000/categorias')
       .then(response => setCategorias(response.data))
-      .catch(error => console.error('Erro ao buscar categorias:', error));
+      .catch(error => console.error('Erro ao buscar disciplinas/categorias:', error));
 
     // Fetch turmas
     axios.get('http://localhost:5000/turmas')
@@ -50,43 +51,50 @@ function ModalAdicionar({ isOpen, toggleModal }) {
   if (!isOpen) return null; // Retorna null se o modal não estiver aberto
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center">
+    <div className="fixed inset-0 z-50 flex items-center justify-center overflow-hidden">
       <div className="fixed inset-0 bg-black opacity-50" onClick={toggleModal}></div>
-      <div className="z-10 p-6 bg-white rounded-lg shadow-lg">
-        <h2 className="pb-5 text-xl font-semibold text-center">Adicionar Novo Projeto</h2>
+      <div className="z-10 py-8 px-10 bg-white rounded-lg shadow-lg min-w-fit hover:py-10 hover:px-12 transition-all ease-in-out">
+        <h2 className="pb-5 text-xl font-semibold text-center cursor-default transition-all hover:scale-105 ease-in-out">Adicionar Novo Projeto</h2>
         <form onSubmit={handleSubmit}>
           <input
             type="text"
             placeholder="Nome do Projeto"
             value={nomeProjeto}
             onChange={(e) => setNomeProjeto(e.target.value)}
-            className="w-full p-2 mb-4 border border-gray-300 rounded-md"
+            className="w-full p-2 mb-4 border border-gray-300 rounded-md focus:ring-green-400 transition-all focus:scale-105"
             required
           />
           <textarea
-            placeholder="Descrição do Projeto"
+            placeholder="Descrição do Projeto(opcional)"
             value={descricaoProjeto}
             onChange={(e) => setDescricaoProjeto(e.target.value)}
-            className="w-full p-2 mb-4 border border-gray-300 rounded-md resize-none"
+            className="w-full p-2 mb-4 border border-gray-300 rounded-md resize-none focus:ring-green-400 transition-all focus:scale-105"
           ></textarea>
-          <select
-            value={categoria}
-            onChange={(e) => setCategoria(e.target.value)}
-            className="w-full p-2 mb-4 border border-gray-300 rounded-md"
-            required
-          >
-            <option value="">Selecione a Categoria</option>
-            {categorias.map((cat) => (
-              <option key={cat.id} value={cat.id}>
-                {cat.nome}
-              </option>
-            ))}
-          </select>
+          <div className='flex items-center justify-around group'>
+            <select
+              value={categoria}
+              onChange={(e) => setCategoria(e.target.value)}
+              className="w-full p-2 mb-4 border border-gray-300 rounded-md focus:ring-green-400 transition-all focus:scale-105 focus:mr-1"
+              required
+            >
+              <option value="">Selecione a Disciplina</option>
+              {categorias.map((cat) => (
+                <option key={cat.id} value={cat.id}>
+                  {cat.nome}
+                </option>
+              ))}
+            </select>
+            <a type='' className='bg-white rounded-full mb-4 mr-2 ml-4 ring-1 ring-green-500 cursor-pointer hover:scale-125 transition-all hover:ml-5 group-hover:ring-2 hover:shadow'>
+              <img src={AddIcon} alt="Adicionar"/> 
+              {/* Este é o botão responsável por adicionar mais um campo de disciplina, caso seja necessário */}
+            </a>
+
+          </div>
 
           <select
             value={turma}
             onChange={(e) => setTurma(e.target.value)}
-            className="w-full p-2 mb-4 border border-gray-300 rounded-md"
+            className="w-full p-2 mb-4 border border-gray-300 rounded-md focus:ring-green-400 transition-all focus:scale-105"
             required
           >
             <option value="">Selecione a Turma</option>
@@ -96,8 +104,8 @@ function ModalAdicionar({ isOpen, toggleModal }) {
               </option>
             ))}
           </select>
-          <button type="submit" className="w-full px-4 py-2 text-white bg-green-500 rounded-md">
-            SALVAR
+          <button type="submit" className="w-full px-4 py-2 text-white bg-green-400 rounded-md focus:ring-green-300 transition-all hover:scale-105 ease-in-out hover:bg-green-500 hover:font-semibold">
+            Salvar
           </button>
         </form>
         {errorMessage && (

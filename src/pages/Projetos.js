@@ -214,8 +214,6 @@ function Projetos({ listaProjetos }) {
                 </button>
               </div>
             </div>
-
-            {/* Adicione mais cards conforme necessário */}
           </div>
         </aside>
 

@@ -7,7 +7,6 @@ const Projeto2 = () => {
     <>
     <GradientProjetos />
     <Votacao />
-
     </>
   )
 }

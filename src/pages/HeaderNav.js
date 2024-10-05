@@ -13,7 +13,7 @@ const HeaderNav = () => {
                     </a>
                     <div className="flex items-center space-x-3 md:order-2 md:space-x-0 rtl:space-x-reverse bg-white text-black">
                         <button type="button"
-                            className="flex text-sm bg-white rounded-full md:me-0 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-400 bg-white transition-all hover:scale-105"
+                            className="flex text-sm rounded-full md:me-0 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-400 bg-white transition-all hover:scale-105"
                             id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown"
                             data-dropdown-placement="bottom">
                                 <p className='z-10 bg-white text-black mx-1 mt-1 font-semibold'>Nome usuario</p>
