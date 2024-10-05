@@ -8,16 +8,18 @@ const HeaderNav = () => {
             <nav className="bg-white border-gray-200 dark:bg-gray-900">
                 <div className="flex flex-wrap items-center justify-between max-w-screen-xl p-4 mx-auto">
                     <a target="_blank" href="http://colegiocomercialcpv.com.br/"
-                        className="flex items-center space-x-3 rtl:space-x-reverse" rel="noreferrer">
+                        className="flex items-center space-x-3 rtl:space-x-reverse transition-all hover:scale-105" rel="noreferrer">
                         <img src={Logo} alt="Logo" className="w-auto h-12" />
                     </a>
-                    <div className="flex items-center space-x-3 md:order-2 md:space-x-0 rtl:space-x-reverse">
+                    <div className="flex items-center space-x-3 md:order-2 md:space-x-0 rtl:space-x-reverse bg-white text-black">
                         <button type="button"
-                            className="flex text-sm bg-gray-800 rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
+                            className="flex text-sm bg-white rounded-full md:me-0 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-400 bg-white transition-all hover:scale-105"
                             id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown"
                             data-dropdown-placement="bottom">
+                                <p className='z-10 bg-white text-black mx-1 mt-1 font-semibold'>Nome usuario</p>
                             <span className="sr-only">Open user menu</span>
                             <img src={PersonIcon} alt="Logo" className="w-8 h-8 bg-white border-none rounded-full outline-none" />
+                            
                         </button>
                         <div
                             className="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600"
@@ -33,15 +35,6 @@ const HeaderNav = () => {
                                 </li>
                             </ul>
                         </div>
-                        <button data-collapse-toggle="navbar-user" type="button"
-                            className="inline-flex items-center justify-center w-10 h-10 p-2 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-                            aria-controls="navbar-user" aria-expanded="false">
-                            <span className="sr-only">Open main menu</span>
-                            <svg className="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
-                                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
-                                    d="M1 1h15M1 7h15M1 13h15" />
-                            </svg>
-                        </button>
                     </div>
                     <div className="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-user">
                         <ul
