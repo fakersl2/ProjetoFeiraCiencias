@@ -1,6 +1,6 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import AddIcon from "../assets/img/addicon.svg";
 
 function ModalAdicionar({ isOpen, toggleModal }) {
   const [nomeProjeto, setNomeProjeto] = useState('');
@@ -41,11 +41,14 @@ function ModalAdicionar({ isOpen, toggleModal }) {
         setTurma('');
         setErrorMessage(''); // Limpa a mensagem de erro
         toggleModal();
+        window.location.reload(); 
       })
       .catch(error => {
         console.error('Erro ao salvar projeto:', error);
         setErrorMessage('Ocorreu um erro ao salvar o projeto. Por favor, tente novamente.' + error.message);
       });
+
+
   };
 
   if (!isOpen) return null; // Retorna null se o modal não estiver aberto
@@ -84,11 +87,6 @@ function ModalAdicionar({ isOpen, toggleModal }) {
                 </option>
               ))}
             </select>
-            <a type='' className='bg-white rounded-full mb-4 mr-2 ml-4 ring-1 ring-green-500 cursor-pointer hover:scale-125 transition-all hover:ml-5 group-hover:ring-2 hover:shadow'>
-              <img src={AddIcon} alt="Adicionar"/> 
-              {/* Este é o botão responsável por adicionar mais um campo de disciplina, caso seja necessário */}
-            </a>
-
           </div>
 
           <select

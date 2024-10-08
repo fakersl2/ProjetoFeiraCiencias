@@ -8,7 +8,7 @@ const Cadastro = () => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        const nome = event.target.email.value;
+        const nome = "";
         const senha = event.target.password.value;
 
         try {

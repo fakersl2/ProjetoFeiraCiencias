@@ -51,4 +51,15 @@ module.exports = class UsuarioController{
             res.status(400).json(error.message)
         }
     }
+
+    static async buscaPorId(req,res){
+        const { id } = req.params;
+        try {
+            const usuario = await database.usuarios.findByPk(id)
+
+            res.status(200).json(usuario)
+        } catch (error) {
+            res.status(400).json(error.message)
+        }
+    }
 }
