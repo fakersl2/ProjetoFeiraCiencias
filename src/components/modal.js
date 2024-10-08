@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react'; // Importar useEffect
 import { BsEmojiSmile, BsEmojiNeutral, BsEmojiFrown } from "react-icons/bs";
 import axios from 'axios';
 
@@ -6,7 +6,19 @@ function Modal({ isOpen, toggleModal, projectId }) {
   const [codigo, setCodigo] = useState('');
   const [nota, setNota] = useState('');
   const [comentario, setComentario] = useState('');
-  const [errorMessage, setErrorMessage] = useState(''); // Estado para armazenar a mensagem de erro
+  const [errorMessage, setErrorMessage] = useState('');
+  const [projectName, setProjectName] = useState(''); // Estado para armazenar o nome do projeto
+
+  useEffect(() => {
+    if (isOpen) {
+      axios.get(`http://localhost:5000/projetos/${projectId}`)
+        .then(response => {
+          setProjectName(response.data.nome); // Pega o nome do projeto da resposta
+          console.log('Project Name:', response.data.nome); // Adiciona log para depuração
+        })
+        .catch(error => console.error('Erro ao buscar nome do projeto:', error));
+    }
+  }, [isOpen, projectId]); // Dependência para recarregar quando o modal abrir
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -18,8 +30,6 @@ function Modal({ isOpen, toggleModal, projectId }) {
       usuario_id: userId
     };
 
-    console.log('Project ID:', projectId); // Adicionando log para depuração
-
     try {
       const response = await axios.post(`http://localhost:5000/votos/${projectId}`, voto, {
         headers: {
@@ -29,11 +39,12 @@ function Modal({ isOpen, toggleModal, projectId }) {
       if (response.status === 200) {
         console.log('Voto enviado com sucesso!');
         toggleModal();
+        window.location.reload();
       } else {
-        setErrorMessage('Erro ao enviar voto'); // Definindo a mensagem de erro
+        setErrorMessage('Erro ao enviar voto');
       }
     } catch (error) {
-      setErrorMessage(`Erro ao enviar voto: ${error.message}`); // Definindo a mensagem de erro
+      setErrorMessage(`Erro ao enviar voto: ${error.message}`);
     }
   };
 
@@ -41,24 +52,22 @@ function Modal({ isOpen, toggleModal, projectId }) {
     <div>
       {isOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center">
-          <div 
-            className="fixed inset-0 bg-black opacity-50" 
-            onClick={toggleModal}
-          ></div>
+          <div className="fixed inset-0 bg-black opacity-50" onClick={toggleModal}></div>
           <div className="z-10 p-6 bg-white rounded-lg shadow-lg">
             <h2 className="text-xl font-semibold text-center">Votação</h2>
-            <p className="mb-4 text-center">Nome do projeto</p>
+            <p className="mb-4 text-center">{projectName}</p> {/* Exibir o nome do projeto */}
             <form onSubmit={handleSubmit}>
-              <div className="mb-4">
-                <input 
-                  type="text" 
-                  placeholder="Identificação" 
-                  className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-400" 
-                  value={codigo}
-                  onChange={(e) => setCodigo(e.target.value)}
-                  required
-                />
+              <input 
+                type="text" 
+                placeholder="Identificação" 
+                className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-400" 
+                value={codigo}
+                onChange={(e) => setCodigo(e.target.value)}
+                required
+              />
+              <div className="mb-4"> {/* Adiciona um espaço maior antes da div */}
               </div>
+              
               <div className="flex justify-center mb-4">
                 <button 
                   type="button" 

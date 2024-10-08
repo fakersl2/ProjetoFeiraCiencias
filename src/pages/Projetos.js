@@ -32,6 +32,9 @@ function Projetos({ listaProjetos }) {
         `http://localhost:5000/projetos/nome/${searchTerm}`
       );
       setProjetos(response.data);
+      if (searchTerm == " ") {
+        window.location.reload();
+      }
     } catch (error) {
       console.error("Erro ao buscar projetos:", error);
     }
@@ -185,15 +188,7 @@ function Projetos({ listaProjetos }) {
                   </button>
                 </div>
               ))}
-              <Modal
-                isOpen={isOpen}
-                toggleModal={toggleModal}
-                projectId={selectedProjectId}
-              />
-              <ModalAdicionar
-                isOpen={isAddModalOpen}
-                toggleModal={toggleAddModal}
-              />
+
               {/* CARD3 */}
               <div className="flex items-center justify-between w-full p-4 bg-gray-100 border-2 border-gray-200 border-dashed rounded-lg shadow-md hover:shadow-lg">
                 <div>
@@ -272,17 +267,12 @@ function Projetos({ listaProjetos }) {
         </aside>
       </div>
 
-      {/* Modal */}
       <Modal
         isOpen={isOpen}
         toggleModal={toggleModal}
         projectId={selectedProjectId}
       />
-
-      {/* Modal 2 */}
-      {isAddModalOpen && (
-        <ModalAdicionar isOpen={isAddModalOpen} toggleModal={toggleAddModal} />
-      )}
+      <ModalAdicionar isOpen={isAddModalOpen} toggleModal={toggleAddModal} />
     </div>
   );
 }
