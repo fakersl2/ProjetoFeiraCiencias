@@ -1,28 +1,30 @@
-import React, { useState, useEffect } from 'react'; // Importar useEffect
-import { BsEmojiSmile, BsEmojiNeutral, BsEmojiFrown } from "react-icons/bs";
-import axios from 'axios';
+import React, { useState, useEffect } from 'react'; // Importa os hooks useState e useEffect do React
+import { BsEmojiSmile, BsEmojiNeutral, BsEmojiFrown } from "react-icons/bs"; // Importa ícones para o sistema de votação
+import axios from 'axios'; // Importa axios para requisições HTTP
 
 function Modal({ isOpen, toggleModal, projectId }) {
-  const [codigo, setCodigo] = useState('');
-  const [nota, setNota] = useState('');
-  const [comentario, setComentario] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
+  const [codigo, setCodigo] = useState(''); // Estado para armazenar a identificação
+  const [nota, setNota] = useState(''); // Estado para armazenar a nota
+  const [comentario, setComentario] = useState(''); // Estado para armazenar o comentário
+  const [errorMessage, setErrorMessage] = useState(''); // Estado para armazenar mensagens de erro
   const [projectName, setProjectName] = useState(''); // Estado para armazenar o nome do projeto
 
+  // useEffect para buscar o nome do projeto quando o modal é aberto
   useEffect(() => {
     if (isOpen) {
       axios.get(`http://localhost:5000/projetos/${projectId}`)
         .then(response => {
-          setProjectName(response.data.nome); // Pega o nome do projeto da resposta
-          console.log('Project Name:', response.data.nome); // Adiciona log para depuração
+          setProjectName(response.data.nome); // Armazena o nome do projeto
+          console.log('Project Name:', response.data.nome); // Log para depuração
         })
         .catch(error => console.error('Erro ao buscar nome do projeto:', error));
     }
-  }, [isOpen, projectId]); // Dependência para recarregar quando o modal abrir
+  }, [isOpen, projectId]); // Dependências para recarregar quando o modal abrir
 
+  // Função para lidar com o envio do formulário
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    const userId = localStorage.getItem('userId');
+    e.preventDefault(); // Prevê o comportamento padrão do formulário
+    const userId = localStorage.getItem('userId'); // Obtém o ID do usuário armazenado no localStorage
     const voto = {
       codigo: codigo,
       nota: nota,
@@ -37,56 +39,56 @@ function Modal({ isOpen, toggleModal, projectId }) {
         },
       });
       if (response.status === 200) {
-        console.log('Voto enviado com sucesso!');
-        toggleModal();
-        window.location.reload();
+        console.log('Voto enviado com sucesso!'); // Log de sucesso
+        toggleModal(); // Fecha o modal
+        window.location.reload(); // Recarrega a página
       } else {
-        setErrorMessage('Erro ao enviar voto');
+        setErrorMessage('Erro ao enviar voto'); // Define mensagem de erro
       }
     } catch (error) {
-      setErrorMessage(`Erro ao enviar voto: ${error.message}`);
+      setErrorMessage(`Erro ao enviar voto: ${error.message}`); // Define mensagem de erro com detalhes
     }
   };
 
   return (
     <div>
-      {isOpen && (
+      {isOpen && ( // Renderiza o modal se estiver aberto
         <div className="fixed inset-0 z-50 flex items-center justify-center">
           <div className="fixed inset-0 bg-black opacity-50" onClick={toggleModal}></div>
           <div className="z-10 p-6 bg-white rounded-lg shadow-lg">
             <h2 className="text-xl font-semibold text-center">Votação</h2>
-            <p className="mb-4 text-center">{projectName}</p> {/* Exibir o nome do projeto */}
+            <p className="mb-4 text-center">{projectName}</p> {/* Exibe o nome do projeto */}
             <form onSubmit={handleSubmit}>
               <input 
                 type="text" 
                 placeholder="Identificação" 
                 className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-400" 
                 value={codigo}
-                onChange={(e) => setCodigo(e.target.value)}
+                onChange={(e) => setCodigo(e.target.value)} // Atualiza o estado de código
                 required
               />
-              <div className="mb-4"> {/* Adiciona um espaço maior antes da div */}
-              </div>
+              <div className="mb-4"></div>
               
               <div className="flex justify-center mb-4">
+                {/* Botões para selecionar a nota com emojis */}
                 <button 
                   type="button" 
                   className="text-green-500 transition hover:scale-150 ease-in-out focus:ring-2 active:shadow rounded-full focus:ring-green-500 hover:ring-1"
-                  onClick={() => setNota('bom')}
+                  onClick={() => setNota('bom')} // Define nota como "bom"
                 >
                   <BsEmojiSmile />
                 </button>
                 <button 
                   type="button" 
                   className="mx-4 text-gray-500 transition hover:scale-150 ease-in-out focus:ring-2 active:shadow rounded-full focus:ring-gray-500 hover:ring-1"
-                  onClick={() => setNota('médio')}
+                  onClick={() => setNota('médio')} // Define nota como "médio"
                 >
                   <BsEmojiNeutral />
                 </button>
                 <button 
                   type="button" 
                   className="text-red-500 transition hover:scale-150 ease-in-out focus:ring-2 active:shadow rounded-full focus:ring-red-500 hover:ring-1"
-                  onClick={() => setNota('ruim')}
+                  onClick={() => setNota('ruim')} // Define nota como "ruim"
                 >
                   <BsEmojiFrown />
                 </button>
@@ -96,11 +98,11 @@ function Modal({ isOpen, toggleModal, projectId }) {
                   placeholder="Comentário (opcional)..." 
                   className="w-full p-2 border border-gray-300 rounded-md resize-none focus:outline-none focus:ring-2 focus:ring-green-400" 
                   value={comentario}
-                  onChange={(e) => setComentario(e.target.value)}
+                  onChange={(e) => setComentario(e.target.value)} // Atualiza o estado de comentário
                 ></textarea>
               </div>
-              {errorMessage && (
-                <p className="mb-4 text-red-500">{errorMessage}</p> // Exibindo a mensagem de erro
+              {errorMessage && ( // Exibe mensagem de erro se houver
+                <p className="mb-4 text-red-500">{errorMessage}</p>
               )}
               <div className="text-center">
                 <button 
@@ -118,4 +120,4 @@ function Modal({ isOpen, toggleModal, projectId }) {
   );
 }
 
-export default Modal;
+export default Modal; // Exporta o componente Modal

@@ -1,24 +1,28 @@
-
 const {
   Model
-} = require('sequelize');
+} = require('sequelize'); // Importa a classe Model do Sequelize
+
 module.exports = (sequelize, DataTypes) => {
   class usuarios extends Model {
     /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
+     * Método auxiliar para definir associações.
+     * Este método não faz parte do ciclo de vida do Sequelize.
+     * O arquivo `models/index` chamará este método automaticamente.
      */
     static associate(models) {
-      usuarios.hasMany(models.avaliacoes, {foreignKey: 'usuario_id'})
+      // Define a associação com o modelo avaliacoes
+      usuarios.hasMany(models.avaliacoes, { foreignKey: 'usuario_id' }); // Cada usuário pode ter várias avaliações
     }
   }
+
+  // Inicializa o modelo com os atributos
   usuarios.init({
-    nome: DataTypes.STRING,
-    senha: DataTypes.STRING
+    nome: DataTypes.STRING, // Atributo que representa o nome do usuário
+    senha: DataTypes.STRING  // Atributo que representa a senha do usuário
   }, {
-    sequelize,
-    modelName: 'usuarios',
+    sequelize, // Passa a instância do Sequelize
+    modelName: 'usuarios', // Nome do modelo
   });
-  return usuarios;
+
+  return usuarios; // Retorna a classe do modelo
 };
