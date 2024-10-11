@@ -1,14 +1,16 @@
-import React from 'react'
-import Votacao from './avaliacoes'
-import GradientProjetos from './GradientProjetos'
+import React from 'react' // Importa a biblioteca React
+import Votacao from './avaliacoes' // Importa o componente Votacao (Avaliações)
+import GradientProjetos from './GradientProjetos' // Importa o componente GradientProjetos
 
 const Projeto2 = () => {
   return (
     <>
-    <GradientProjetos />
-    <Votacao />
+      {/* Renderiza o componente GradientProjetos */}
+      <GradientProjetos />
+      {/* Renderiza o componente Votacao abaixo do GradientProjetos */}
+      <Votacao />
     </>
   )
 }
 
-export default Projeto2;
+export default Projeto2; // Exporta o componente Projeto2 para ser utilizado em outras partes da aplicação

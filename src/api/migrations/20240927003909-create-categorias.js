@@ -1,30 +1,31 @@
-
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
+    // Cria a tabela 'categorias'
     await queryInterface.createTable('categorias', {
       id: {
-        allowNull: false,
-        autoIncrement: true,
-        primaryKey: true,
-        type: Sequelize.INTEGER
+        allowNull: false, // O campo não pode ser nulo
+        autoIncrement: true, // O ID será gerado automaticamente
+        primaryKey: true, // Define este campo como chave primária
+        type: Sequelize.INTEGER // O tipo de dado é inteiro
       },
       nome: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING // O campo 'nome' é do tipo string
       },
       createdAt: {
-        allowNull: false,
-        type: Sequelize.DATE
+        allowNull: false, // O campo não pode ser nulo
+        type: Sequelize.DATE // O tipo de dado é data
       },
       updatedAt: {
-        allowNull: false,
-        type: Sequelize.DATE
+        allowNull: false, // O campo não pode ser nulo
+        type: Sequelize.DATE // O tipo de dado é data
       }
     });
   },
+  
   async down(queryInterface, Sequelize) {
-    // await queryInterface.sequelize.query('PRAGMA foreign_keys = OFF;');
-    await queryInterface.dropTable('categorias');
-    await queryInterface.sequelize.query('PRAGMA foreign_keys = ON;');
+    // Remove a tabela 'categorias' caso seja necessário reverter a migração
+    await queryInterface.dropTable('categorias'); // Remove a tabela 'categorias'
+    await queryInterface.sequelize.query('PRAGMA foreign_keys = ON;'); // Reativa as restrições de chave estrangeira
   }
 };
