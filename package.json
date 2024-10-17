@@ -23,7 +23,7 @@
   },
   "scripts": {
     "start": "node src/api/server.js",
-    "build": "cd src/pages && npm install && npm run build",
+    "build": "npm run build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "projetoDev": "npm run dev",
