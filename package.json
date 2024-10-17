@@ -10,6 +10,7 @@
     "cors": "^2.8.5",
     "express": "^4.21.0",
     "flowbite-react": "^0.10.1",
+    "nodemon": "^3.1.7",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.26.2",
@@ -21,15 +22,14 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "node src/api/server.js",
-    "build": "npm run build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
     "projetoDev": "npm run dev",
     "projetoStart": "npm start",
     "projeto": "npm-run-all --parallel projetoDev projetoStart",
     "dev": "nodemon ./src/api/server.js",
-    "client": "cd src/pages && npm start"
+    "start": "react-scripts start",
+    "build": "react-scripts build --output public",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [
@@ -48,10 +48,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
-    "mysql2": "^3.11.3",
-    "nodemon": "^3.1.7"
   }
 }
