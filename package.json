@@ -22,6 +22,9 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
+    "projetoDev": "npm run dev",
+    "projetoStart": "npm start",
+    "projeto": "npm-run-all --parallel projetoDev projetoStart",
     "dev": "nodemon ./src/api/server.js",
     "start": "react-scripts start",
     "build": "react-scripts build",
