@@ -7,7 +7,7 @@ const port = process.env.PORT || 5000; // Define a porta do servidor
 
 // Configura o middleware CORS
 app.use(cors({
-    origin: 'https://projetofeiraciencias-5.onrender.com' // Altere isso para o seu domínio ao invés de localhost
+    origin: 'https://projetofeiraciencias-5.onrender.com'
 }));
 
 app.use(express.json()); // Middleware para fazer o parsing de JSON no corpo das requisições
