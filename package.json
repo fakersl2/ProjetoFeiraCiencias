@@ -27,7 +27,7 @@
     "projeto": "npm-run-all --parallel projetoDev projetoStart",
     "dev": "nodemon ./src/api/server.js",
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "react-scripts build --output public",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
