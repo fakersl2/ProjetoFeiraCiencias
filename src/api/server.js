@@ -15,11 +15,11 @@ app.use(express.json()); // Middleware para fazer o parsing de JSON no corpo das
 routes(app); // Inicializa as rotas
 
 // Serve os arquivos estáticos da build do React
-app.use(express.static(path.join(__dirname, '../../client/build')));
+app.use(express.static(path.join(__dirname, '../../pages/build')));
 
 // Rota para qualquer caminho não especificado (React router)
 app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../../client/build', 'index.html'));
+    res.sendFile(path.join(__dirname, '../../pages/build', 'index.html'));
 });
 
 // Inicia o servidor na porta especificada
