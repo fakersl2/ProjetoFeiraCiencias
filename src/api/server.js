@@ -13,6 +13,8 @@ app.use(cors({
 app.use(express.json()); // Middleware para fazer o parsing de JSON no corpo das requisições
 routes(app); // Inicializa as rotas
 
+module.exports = app;
+
 // Inicia o servidor na porta especificada
 app.listen(port, () => {
     console.log(`Servidor rodando na porta ${port}`); // Log que indica que o servidor está ativo
