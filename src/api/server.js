@@ -1,9 +1,10 @@
-const express = require('express'); // Importa o Express
-const cors = require('cors'); // Importa o middleware cors
-const routes = require('../api/routes/index.js'); // Importa as rotas da aplicação
+const express = require('express');
+const cors = require('cors');
+const path = require('path'); // Necessário para servir arquivos estáticos
+const routes = require('../api/routes/index.js');
 
-const app = express(); // Cria uma instância do Express
-const port = process.env.PORT || 5000; // Usa a variável de ambiente PORT ou 5000 como padrão
+const app = express();
+const port = process.env.PORT || 5000;
 
 // Configura o middleware CORS
 app.use(cors({
@@ -12,6 +13,14 @@ app.use(cors({
 
 app.use(express.json()); // Middleware para fazer o parsing de JSON no corpo das requisições
 routes(app); // Inicializa as rotas
+
+// Serve os arquivos estáticos da build do React
+app.use(express.static(path.join(__dirname, '../../client/build')));
+
+// Rota para qualquer caminho não especificado (React router)
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../../client/build', 'index.html'));
+});
 
 // Inicia o servidor na porta especificada
 app.listen(port, () => {
