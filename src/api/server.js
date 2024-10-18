@@ -7,13 +7,13 @@ const port = 5000; // Define a porta do servidor
 
 // Configura o middleware CORS
 app.use(cors({
-    origin: 'https://projetofeiraciencias.up.railway.app' // Permite apenas requisições da origem especificada
+    origin: 'https://localhost:3000' // Permite apenas requisições da origem especificada
 }));
 
 app.use(express.json()); // Middleware para fazer o parsing de JSON no corpo das requisições
 routes(app); // Inicializa as rotas
 
 // Inicia o servidor na porta especificada
-app.listen(port, () => {
+app.listen(port,() => {
     console.log(`Servidor rodando na porta ${port}`); // Log que indica que o servidor está ativo
 });
