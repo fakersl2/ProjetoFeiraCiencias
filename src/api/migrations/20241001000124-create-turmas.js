@@ -25,6 +25,7 @@ module.exports = {
   
   async down(queryInterface, Sequelize) {
     // Remove a tabela 'turmas' caso seja necessário reverter a migração
+    // await queryInterface.sequelize.query('PRAGMA foreign_keys = OFF;'); // Reativa as restrições de chave estrangeira
     await queryInterface.dropTable('turmas'); // Remove a tabela 'turmas'
     await queryInterface.sequelize.query('PRAGMA foreign_keys = ON;'); // Reativa as restrições de chave estrangeira
   }
